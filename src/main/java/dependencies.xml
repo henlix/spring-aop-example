@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <aop:aspectj-autoproxy/>
+
+
+    <bean id="hybridAspect" class="org.sopt.spring.aop.aspect.HybridAspect"/>
+    <bean id="protossAspect" class="org.sopt.spring.aop.aspect.ProtossAspect"/>
+    <bean id="terranAspect" class="org.sopt.spring.aop.aspect.TerranAspect"/>
+    <bean id="zergAspect" class="org.sopt.spring.aop.aspect.ZergAspect"/>
+
+    <bean id="hybrid" class="org.sopt.spring.aop.race.impl.Hybrid"/>
+    <bean id="protoss" class="org.sopt.spring.aop.race.impl.Protoss"/>
+    <bean id="terran" class="org.sopt.spring.aop.race.impl.Terran"/>
+    <bean id="zerg" class="org.sopt.spring.aop.race.impl.Zerg"/>
+
+    <aop:config>
+
+        <aop:pointcut id="hybridPointcut" expression="execution(public void org.sopt.spring.aop.race.impl.Hybrid.attack())"/>
+
+        <aop:aspect ref="hybridAspect">
+
+            <aop:before method="before" pointcut-ref="hybridPointcut"/>
+            <aop:after method="after" pointcut-ref="hybridPointcut"/>
+
+        </aop:aspect>
+
+    </aop:config>
+
+</beans>
